@@ -16,6 +16,7 @@ describe("<TodoList />", () => {
     expect(headingElement).toBeInTheDocument();
     expect(inputElement).toBeInTheDocument();
     expect(inputElement).toHaveValue("");
+    expect(inputElement).toHaveFocus();
     expect(buttonElement).toBeInTheDocument();
     expect(buttonElement).toBeDisabled();
   });
@@ -77,7 +78,7 @@ describe("<TodoList />", () => {
     await user.click(buttonElement);
 
     const todo = screen.getByRole("listitem");
-    expect(todo).toHaveTextContent("walk the cat");
+    expect(screen.getByRole("listitem")).toHaveTextContent("walk the cat");
 
     const deleteButtonElement = screen.getByRole("button", { name: "delete" });
     await user.click(deleteButtonElement);

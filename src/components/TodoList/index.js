@@ -47,7 +47,9 @@ function TodoList() {
         <input
           type="text"
           id="todo"
+          autoFocus
           placeholder="type in your todo"
+          autoComplete="off"
           value={todo.text}
           onChange={(e) => handleNewTodo(e)}
         />
