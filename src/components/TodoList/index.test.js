@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 
 import TodoList from ".";
@@ -34,6 +34,21 @@ describe("<TodoList />", () => {
     expect(buttonElement).toBeEnabled();
   });
 
+  test("should disable the button once the input field is empty", async () => {
+    user.setup();
+    render(<TodoList />);
+
+    const inputElement = screen.getByRole("textbox", { name: "todo" });
+    const buttonElement = screen.getByRole("button", { name: "submit" });
+
+    await user.type(inputElement, "walk the cat");
+
+    expect(buttonElement).toBeEnabled();
+
+    await user.clear(inputElement);
+    expect(buttonElement).toBeDisabled();
+  });
+
   test("should clear the input value once the submit button is clicked", async () => {
     user.setup();
     render(<TodoList />);
@@ -60,11 +75,11 @@ describe("<TodoList />", () => {
     await user.type(inputElement, "walk the dog");
     await user.click(buttonElement);
 
-    const todo = screen.getAllByRole("listitem");
+    const todos = screen.getAllByRole("listitem");
 
-    expect(todo[0]).toHaveTextContent("walk the cat");
-    expect(todo[1]).toHaveTextContent("walk the dog");
-    expect(todo).toHaveLength(2);
+    expect(todos[0]).toHaveTextContent("walk the cat");
+    expect(todos[1]).toHaveTextContent("walk the dog");
+    expect(todos).toHaveLength(2);
   });
 
   test("should remove a todo when its delete button is clicked", async () => {

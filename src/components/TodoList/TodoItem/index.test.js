@@ -5,7 +5,7 @@ import TodoItem from ".";
 
 const todo = {
   id: Math.random(),
-  text: "Go to the gym",
+  text: "Go to the office",
 };
 
 describe("<TodoItem />", () => {
@@ -16,7 +16,7 @@ describe("<TodoItem />", () => {
     const todoItem = screen.getByRole("listitem");
     const deleteButton = screen.getByRole("button", { name: "delete" });
 
-    expect(todoItem).toHaveTextContent("Go to the gym");
+    expect(todoItem).toHaveTextContent("Go to the office");
     expect(deleteButton).toBeInTheDocument();
   });
 
